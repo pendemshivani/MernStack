@@ -1,29 +1,5 @@
+
 const jwt = require("jsonwebtoken");
-// const JWT_SECRET = require("./config");
-
-const JWT_SECRET =paymentwallet;
-
-const authMiddleware = (req, res, next)=>{
-    const authHeader = req.headers.authorization;
-    if(!authHeader || !authHeader.startsWith('Bearer ')) return res.status(403).json({});
-    const token = authHeader.split(' ')[1];
-    try{
-        const decoded = jwt.verify(token, JWT_SECRET);
-        if(decoded.userId){
-            myCurrentId = decoded.userId;
-            next();
-        }
-        else{
-            return res.status(403).json({});
-        }
-    }
-    catch(err){
-        return res.status(403).json({});
-    }
-}
-
-module.exports = {authMiddleware};
-/*const jwt = require("jsonwebtoken");
 require("dotenv").config(); // To load environment variables from a .env file
 
 // Use environment variable for JWT_SECRET or provide a default value
@@ -46,7 +22,7 @@ const authMiddleware = (req, res, next) => {
 
         // Check if the token contains a valid userId
         if (decoded.userId) {
-            req.userId = decoded.userId; // Attach the userId to the request object for later use
+            req.user = { userId: decoded.userId }; // Attach the userId to the request object for later use
             next(); // Proceed to the next middleware or route handler
         } else {
             return res.status(403).json({ message: "Access forbidden: Invalid token" });
@@ -57,4 +33,4 @@ const authMiddleware = (req, res, next) => {
     }
 };
 
-module.exports = { authMiddleware };*/
+module.exports = { authMiddleware };
